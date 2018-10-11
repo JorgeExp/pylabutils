@@ -61,8 +61,8 @@ class Interval:
 import copy
 
 def multisort(*args):
-    '''>>>multisort(guide, data, criteria)
-    Sorts various indexable objects to a criteria that only one of them follows.
+    '''>>>multisort(guide, data, criterion)
+    Sorts various indexable objects to a criterion that only one of them follows.
 
     Criteria are 'asc' for ascending, 'desc' for descending or 'dalt' for descending alternate,
     although the latter one is nearly useless.'''
@@ -96,19 +96,19 @@ def multisort(*args):
     sortings = (asc, desc, dalt)
 
     if len(args) == 3:
-        guide, data, criteria = args
-        if type(criteria) == str:
-            criteria = eval(criteria)
+        guide, data, criterion = args
+        if type(criterion) == str:
+            criterion = eval(criterion)
     elif len(args) == 2 and type(args[1]) not in ['function', 'string']:
         guide, data = args
-        criteria = asc
+        criterion = asc
     elif not args:
         return sortings
     else:
         raise(ValueError('introduced arguments are invalid'))
         return
 
-    mydict = dict([tuple(x) for x in criteria(guide)])
+    mydict = dict([tuple(x) for x in criterion(guide)])
     findices = list(mydict.values())
 
     for i in data:
