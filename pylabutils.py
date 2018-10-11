@@ -112,6 +112,9 @@ def multisort(*args):
 
 asc, desc, dalt = multisort()
 
+
+
+
 # For adjusting (x, y) data to a given curve
 # with unknown parameter values
 
@@ -156,11 +159,12 @@ def curvefit(func, x, y, dev, *guess):
     return [sols[0], np.sqrt(np.diag(sols[1]))]
 
 
-
 # To do:
 # Allow more freedom at naming variables and parameters
 # and at writing equations
 # Introduce graphical representation
+
+
 
 
 # Do a series of things with a given path
@@ -183,7 +187,6 @@ def wdir(path):
         yield
     finally:
         os.chdir(current_dir)
-
 
 
 
