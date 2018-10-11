@@ -112,6 +112,14 @@ def multisort(*args):
 
 asc, desc, dalt = multisort()
 
+# For adjusting (x, y) data to a given curve
+# with unknown parameter values
+
+import re
+import copy
+import numpy as np
+import scipy.optimize as so
+
 # Function has to be introduced as a string
 # Variables have to be x and y, with y = f(x)
 # y has to be left alone in the first term of the equation
@@ -120,11 +128,6 @@ asc, desc, dalt = multisort()
 # AA, AB, etc.), number constants go between square brackets.
 # For example, y = np.exp(TA / x + TB / x) + CP * [np.e]
 # here TA, TB and CP are parameters and np.e is obviously a constant.
-
-import re
-import copy
-import numpy as np
-import scipy.optimize as so
 
 def curvefit(func, x, y, dev, *guess):
 
