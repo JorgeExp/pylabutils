@@ -1,9 +1,16 @@
-# For defining intervals in real numbers line
-# (n, m); [a, b]; (x, y]
+# pylabutils 0.5
 
 import re
 
 class Interval:
+    '''(n, m); [a, b]; (x, y]
+    Defines intervals in the real numbers line.
+
+    >>>3 in (0, 3]
+    True
+    >>>1 in [0, 1)
+    False'''
+
     def __init__(self, interval):
         if isinstance(interval, Interval):
             self.begin, self.end = interval.begin, interval.end
@@ -51,13 +58,14 @@ class Interval:
 
 
 
-# Sorting various functions to a criteria that only one of them follows
-# 'dalt' is almost useless
-# >>>multisort(guide, data, criteria)
-
 import copy
 
 def multisort(*args):
+    '''>>>multisort(guide, data, criteria)
+    Sorts various indexable objects to a criteria that only one of them follows.
+
+    Criteria are 'asc' for ascending, 'desc' for descending or 'dalt' for descending alternate,
+    although the latter one is nearly useless.'''
 
     def asc(item):
         myitem = [[x, item.index(x)] for x in item]
@@ -115,24 +123,24 @@ asc, desc, dalt = multisort()
 
 
 
-# For adjusting (x, y) data to a given curve
-# with unknown parameter values
-
 import re
 import copy
 import numpy as np
 import scipy.optimize as so
 
-# Function has to be introduced as a string
-# Variables have to be x and y, with y = f(x)
-# y has to be left alone in the first term of the equation
-# Parameters go in CAPS (unfortunately they cannot have numbers
-# in their names, like A1, A2. You have to choose different letters, like
-# AA, AB, etc.), number constants go between square brackets.
-# For example, y = np.exp(TA / x + TB / x) + CP * [np.e]
-# here TA, TB and CP are parameters and np.e is obviously a constant.
 
 def curvefit(func, x, y, dev, *guess):
+    '''Adjusts (x, y) data to a given curve with unknown parameter values.
+
+    Function has to be introduced as a string.
+    Variables have to be x and y, with y = f(x).
+    'dev' is the previously obtained uncertainty for 'y' values.
+    'guess' is the list of "guessed" values for the parameters in the equation - optional, but necessary in some cases.
+    'y' has to be left alone in the first term of the equation.
+    Parameters go in CAPS (unfortunately they cannot yet have numbers in their names, like 'A1', 'A2'; you have to choose different letters, like 'AA', 'AB', etc.).
+    Numeric constants go between square brackets.
+    Example function: 'y = np.exp(TA / x + TB / x) + CP * [np.e]'
+    Here 'TA', 'TB' and 'CP' are parameters and 'np.e' is obviously a constant.'''
 
     parms = re.findall('[A-Z]+', func)
     nums = re.findall('\['+'[^\]]+'+'\]', func)
@@ -167,20 +175,20 @@ def curvefit(func, x, y, dev, *guess):
 
 
 
-# Do a series of things with a given path
-# Typically used for importing/exporting data
-# that's not saved in the same place as our program,
-# letting you not have to change wdir back
-# >>>wdir([path_you_want_to_work_in])
-# sets a path for your current project,
-# >>>with wdir([path]) [do_something]
-# otherwise
-
 from contextlib import contextmanager
 import os
 
 @contextmanager
 def wdir(path):
+    '''Sets working directory.
+
+    Typically used for importing/exporting data that's not saved in the same place as our program, letting you not have to change wdir back.
+    >>>wdir([path_you_want_to_work_in])
+    sets a path for your current project. Use
+    >>>with wdir([path])
+        [do_something]
+    to set a temporary workpath for action [do_something]'''
+
     current_dir = os.getcwd()
     os.chdir(path)
     try:
@@ -191,17 +199,14 @@ def wdir(path):
 
 
 
-# Generate a simple Latex table
-
 from IPython.display import display, Latex
 
-# data, data_titles and precision should all
-# be tuples and have the same item order
-# shape = 'hor'|'ver', box = 'hor'|'ver'|'full'|'none'
-# precision values should be strings, like
-# '3.5f'; '.3i'; '.2f'; '.f'
-
 def table(data, data_titles, precision, shape = 'ver', box = 'ver'):
+    '''Generates a simple Latex table.
+
+    'data', 'data_titles' and 'precision' should all be tuples and have the same item order.
+    'shape' values: 'hor' or 'ver'; 'box' values: 'hor', 'ver', 'full' or 'none'.
+    'precision' values must be strings: '3.5f'; '.3i'; '.2f'; '.f' '''
 
     shape_values = ('ver', 'hor')
     box_values = ('full', 'none', 'ver', 'hor')
