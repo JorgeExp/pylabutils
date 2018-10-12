@@ -3,6 +3,8 @@ import numpy as np
 import math
 
 
+#IMPORTANTE: Esto es python 2.7, no python 3
+
 #La clase medida aún está en proceso, puede tener errores en las incertidumbres o en 
 #algún otro resultado. Si encuentras algún bug comentalo.
 
